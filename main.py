@@ -1,5 +1,5 @@
 from lib.ast.operations import Sum, Mul, Div, Sub
-from lib.ast.leaf import Constant, Variable
+from lib.ast.expresion import Constant, Variable
 from lib.ast.visitor import StringExpresionVisitor, EvaluateExpresionVisitor
 
 expresion = Div(
@@ -18,13 +18,22 @@ expresion = Div(
             Variable("x")
         )    
 )   
+
 x = 3
 y = 5
 
+var = {
+    "x" : x,
+    "y" : y
+}
+
 print(f"x={x}, y={y}")
-evaluateExpresion = EvaluateExpresionVisitor(x=x, y=y)
-stringExpresion = StringExpresionVisitor()
-expresion.accept(evaluateExpresion)
-expresion.accept(stringExpresion)
-print(stringExpresion.getResult())
-print(evaluateExpresion.getResult())
+
+sev = StringExpresionVisitor()
+eev = EvaluateExpresionVisitor(**var)
+
+expresion.accept(sev)
+expresion.accept(eev)
+
+print(sev.getResult())
+print(eev.getResult())
