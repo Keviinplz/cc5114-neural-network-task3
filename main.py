@@ -1,39 +1,35 @@
+import random
+
 from lib.ast.operations import Sum, Mul, Div, Sub
-from lib.ast.expresion import Constant, Variable
-from lib.ast.visitor import StringExpresionVisitor, EvaluateExpresionVisitor
+from lib.ast.expresion import Constant, Variable, Expresion
+from lib.ast.visitor import StringExpresionVisitor, EvaluateExpresionVisitor, CountVisitor
+from lib.ast.utils import generateRandomAST
 
-expresion = Div(
-        Mul(
-            Sum(
-                Variable("y"),
-                Constant(5)
-            ),
-            Sum(
-                Variable("x"),
-                Constant(1)
-            )
-        ),
-        Sub(
-            Constant(8),
-            Variable("x")
-        )    
-)   
+NUMBERS = 4
+TARGET = 323
+POPULATION = 500
 
-x = 3
-y = 5
+constants = random.sample(range(0, 50), NUMBERS)
 
-var = {
-    "x" : x,
-    "y" : y
-}
-
-print(f"x={x}, y={y}")
-
+eev = EvaluateExpresionVisitor()
 sev = StringExpresionVisitor()
-eev = EvaluateExpresionVisitor(**var)
+cv = CountVisitor()
 
-expresion.accept(sev)
-expresion.accept(eev)
+expresions = [generateRandomAST(constants=constants) for _ in range(POPULATION)]
 
-print(sev.getResult())
-print(eev.getResult())
+representations = []
+values = []
+counts = []
+
+for exp in expresions:
+    exp.accept(eev)
+    exp.accept(sev)
+    exp.accept(cv)
+    values.append(eev.getResult())
+    counts.append(cv.getResult())
+    representations.append(sev.getResult())
+
+print(representations)
+print(values)
+print(counts)
+

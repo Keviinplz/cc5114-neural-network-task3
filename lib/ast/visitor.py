@@ -272,8 +272,9 @@ class EvaluateExpresionVisitor(Visitor):
         if v.getValue() not in self.variableSet.keys():
             raise KeyError(f"Free ocurrency of {v.getValue()}. Please declare it in Visitor Constructor")
         value = self.variableSet[v.getValue()]
-        if type(value) != float or type(value) != int:
-            raise SyntaxError(f"{value} must to be Float or Integer, {type(value)} is not allowed")
+        if type(value) != float:
+            if type(value) != int:
+                raise SyntaxError(f"{value} must to be Float or Integer, {type(value)} is not allowed")
 
         self.setResult(value)
         
@@ -287,4 +288,84 @@ class EvaluateExpresionVisitor(Visitor):
         """
         self.setResult(float(c.getValue()))
 
+class CountVisitor(Visitor):
+    """
+    Class CountVisitor
 
+    Count all nodes in a Expresion
+    """
+
+    def __init__(self):
+        """
+        Class CountVisitor
+
+        Count all nodes in a Expresion
+        """
+        super(CountVisitor, self).__init__(0)
+
+
+    def visitBinaryOperatorAndSum(self, op: BinaryOperator) -> None:
+        """
+        visitBinaryOperatorAndSum
+
+        set Result to sum of left branch and right branch
+        """
+        self.visitBinaryOperator(op, lambda x, y: 1 + x + y)
+
+    def visitSum(self, s: Sum) -> None:
+        """
+        visitSum
+
+        set Result to sum of left branch and right branch
+
+        """
+        self.visitBinaryOperatorAndSum(s)
+
+    def visitMul(self, m: Mul) -> None:
+        """
+        visitMul
+
+        set Result to sum of left branch and right branch
+
+        """
+
+        self.visitBinaryOperatorAndSum(m)
+
+    def visitDiv(self, d: Div) -> None:
+        """
+        visitDiv
+
+        set Result to sum of left branch and right branch
+
+        """
+        
+        self.visitBinaryOperatorAndSum(d)
+
+    def visitSub(self, st: Sub) -> None:
+        """
+        visitSub
+
+        set Result to sum of left branch and right branch
+
+        """
+ 
+        self.visitBinaryOperatorAndSum(st)
+
+    def visitVariable(self, v: Variable) -> None:
+        """
+        visitVariable
+
+        Set result to 1
+        
+        """
+ 
+        self.setResult(1)
+
+    def visitConstant(self, c: Constant) -> None:
+        """
+        visitConstant
+
+        Set result to 1
+
+        """
+        self.setResult(1)
