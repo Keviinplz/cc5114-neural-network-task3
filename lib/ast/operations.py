@@ -3,6 +3,7 @@ Module Operations
 
 Operations that can be used in AST.
 """
+
 from .expresion import Expresion, BinaryOperator
 
 class Sum(BinaryOperator):

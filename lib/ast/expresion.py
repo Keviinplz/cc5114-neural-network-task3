@@ -3,6 +3,8 @@ Module Expresion
 
 Module that create Abstracts expresion to AST
 """
+import random 
+
 from abc import ABC, abstractmethod
 
 class Expresion(ABC):
@@ -50,6 +52,9 @@ class Expresion(ABC):
             Value of the expresion
         """
         return self.value
+    def insert(self, tree)-> None:
+        self = tree
+
 
 class BinaryOperator(Expresion):
     """
@@ -96,6 +101,12 @@ class BinaryOperator(Expresion):
             Right expresion of the operator
         """
         return self.right
+    
+    def insert(self, tree: Expresion)-> None:
+        if random.random() >=0.5:
+            self.left = tree
+        else:
+            self.right = tree
 
 class Constant(Expresion):
     """
@@ -129,6 +140,7 @@ class Constant(Expresion):
                 A visitor
         """
         visitor.visitConstant(self)
+    
 
 class Variable(Expresion):
     """

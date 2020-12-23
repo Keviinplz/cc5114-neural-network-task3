@@ -5,9 +5,11 @@ Module Utils
 Utils functions that helps to use AST Objects
 """
 import random
+import copy
 
-from .expresion import Expresion, Constant, Variable
+from .expresion import Expresion, Constant, Variable, BinaryOperator
 from .operations import Sum, Mul, Div, Sub
+from .visitor import StringExpresionVisitor, EvaluateExpresionVisitor, CountVisitor
 
 def generateRandomASTFromList(lst) -> Expresion:
     """
@@ -72,3 +74,49 @@ def generateRandomAST(constants=[], variables=[], leafSize=20) -> Expresion:
     
     random.shuffle(leafs)
     return generateRandomASTFromList(leafs)
+
+def selectRandomTree(tree: Expresion)->Expresion:
+    cv = CountVisitor()
+    if not isinstance(tree, BinaryOperator):
+        return copy.deepcopy(tree)
+        
+
+    tree.accept(cv)
+    a = cv.getResult()
+    tree.getLeft().accept(cv)
+    b = cv.getResult() 
+
+    
+    rand_num = random.randint(1, a)
+    
+    if rand_num <= b: return selectRandomTree(tree.getLeft())
+    elif rand_num == b + 1: return copy.deepcopy(tree)
+    else: return selectRandomTree(tree.getRight())
+
+def adhere(tree: Expresion, graft: Expresion):
+    
+    if random.random()<=0.5:
+        tree.insert(graft)
+    else:
+        if isinstance(tree, BinaryOperator):
+            if random.random()<=0.5:
+                adhere(tree.getLeft(), graft)
+            else:
+                adhere(tree.getRight(), graft)
+        else:
+            tree.insert(graft)
+
+def fitness1(tree: Expresion, target):
+    eev = EvaluateExpresionVisitor()
+    tree.accept(evv)
+    fit = evv.getResult()
+    return abs(fit-target)
+
+def fitness2(tree: Expresion, tuples: list):
+    pass
+
+
+
+
+        
+    

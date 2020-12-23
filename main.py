@@ -3,11 +3,11 @@ import random
 from lib.ast.operations import Sum, Mul, Div, Sub
 from lib.ast.expresion import Constant, Variable, Expresion
 from lib.ast.visitor import StringExpresionVisitor, EvaluateExpresionVisitor, CountVisitor
-from lib.ast.utils import generateRandomAST
+from lib.ast.utils import generateRandomAST, selectRandomTree, adhere
 
-NUMBERS = 4
+NUMBERS = 7
 TARGET = 323
-POPULATION = 500
+POPULATION = 1
 
 constants = random.sample(range(0, 50), NUMBERS)
 
@@ -28,8 +28,14 @@ for exp in expresions:
     values.append(eev.getResult())
     counts.append(cv.getResult())
     representations.append(sev.getResult())
-
+print(expresions[0])
+exp_c = selectRandomTree(expresions[0])
+print(exp_c)
+exp_c.accept(sev)
+print(sev.getResult())
 print(representations)
-print(values)
-print(counts)
+adhere(expresions[0], exp_c)
+expresions[0].accept(sev)
+print(sev.getResult())
+#print(counts)
 
