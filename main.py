@@ -1,6 +1,6 @@
 from lib.ast.operations import Sum, Mul, Div, Sub
 from lib.ast.leaf import Constant, Variable
-from lib.ast.visitor import StringBuilderExpresion
+from lib.ast.visitor import StringExpresionVisitor, EvaluateExpresionVisitor
 
 expresion = Div(
         Mul(
@@ -18,7 +18,13 @@ expresion = Div(
             Variable("x")
         )    
 )   
-stringExpresion = StringBuilderExpresion()
-expresion.accept(stringExpresion)
+x = 3
+y = 5
 
+print(f"x={x}, y={y}")
+evaluateExpresion = EvaluateExpresionVisitor(x=x, y=y)
+stringExpresion = StringExpresionVisitor()
+expresion.accept(evaluateExpresion)
+expresion.accept(stringExpresion)
 print(stringExpresion.getResult())
+print(evaluateExpresion.getResult())
