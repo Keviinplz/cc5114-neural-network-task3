@@ -162,11 +162,33 @@ class StringExpresionVisitor(Visitor):
 
 class EvaluateExpresionVisitor(Visitor):
     """
-    Class EvaluateExpresionVisitor
+        Class EvalueExpresionVisitor
 
-    A visitor operator that convert an AST to a value representation.
+        A visitor operator that convert an AST to a value representation.
 
-    """
+        Parameters:
+
+        **kwargs:
+            Values of Identifiers of AST
+            Examples:
+                -   ```html
+                        ex = Div(Variable("x"), Constant(3))
+                        eev = EvaluateExpresionVisitor(x=3)
+                        ex.accept(eev)
+
+                        eev.getResult()
+                        >>> 1
+                    ```
+
+                -   ```html
+                        ex = Div(Sum(Variable("x"), Variable("y")), Sub(Constant(3), Variable("z")))
+                        eev = EvaluateExpresionVisitor(x=2, y=6, z=1)
+                        ex.accept(eev)
+
+                        eev.getResult()
+                        >>> 4
+                    ```
+        """
 
     def __init__(self, **kwargs):
         """
