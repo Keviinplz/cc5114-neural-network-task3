@@ -1,0 +1,5 @@
+__pycache__/
+lib/__pycache__
+lib/ast/__pycache__
+.git
+
