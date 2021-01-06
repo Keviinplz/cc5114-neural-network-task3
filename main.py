@@ -61,11 +61,11 @@ targetNumberGAParameters = {
     'epochs': 1000
 }
 
-#targetNumberGA = TargetNumberGA(**targetNumberGAParameters)
-#expresion, value = evaluate_model(targetNumberGA)
-#print("Problem 1")
-#print(expresion)
-#print(value)
+targetNumberGA = TargetNumberGA(**targetNumberGAParameters)
+expresion, value = evaluate_model(targetNumberGA)
+print("Problem 1")
+print(expresion)
+print(value)
 
 ## Problem 2
 
