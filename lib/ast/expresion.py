@@ -52,6 +52,7 @@ class Expresion(ABC):
             Value of the expresion
         """
         return self.value
+        
     def insert(self, tree)-> None:
         self = tree
 

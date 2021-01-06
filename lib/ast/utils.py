@@ -76,6 +76,19 @@ def generateRandomAST(constants=[], variables=[], leafSize=20) -> Expresion:
     return generateRandomASTFromList(leafs)
 
 def selectRandomTree(tree: Expresion)->Expresion:
+    """
+    selectRandomTree
+
+    Select a random subtree in a given tree
+
+    Parameters:
+        tree: Expresion 
+            Given tree expresion
+
+        returntype: Expresion
+            Return a subtree randomly selected
+    """
+
     cv = CountVisitor()
     if not isinstance(tree, BinaryOperator):
         return copy.deepcopy(tree)
@@ -94,11 +107,22 @@ def selectRandomTree(tree: Expresion)->Expresion:
     else: return selectRandomTree(tree.getRight())
 
 def adhere(tree: Expresion, graft: Expresion):
+    """
+    adhere
+        Adhere a graft to a given tree Expresion
+
+    Parameters:
+        tree: Expresion 
+            Given tree expresion
+        graft: Expresion 
+            Subtree to graft
+
+    """
     
     if random.random()<=0.5:
         tree.insert(graft)
     else:
-        if isinstance(tree, BinaryOperator):
+        if isinstance(tree, BinaryOperator): # isinstance :o code smell 
             if random.random()<=0.5:
                 adhere(tree.getLeft(), graft)
             else:
@@ -106,14 +130,10 @@ def adhere(tree: Expresion, graft: Expresion):
         else:
             tree.insert(graft)
 
-def fitness1(tree: Expresion, target):
-    eev = EvaluateExpresionVisitor()
-    tree.accept(evv)
-    fit = evv.getResult()
-    return abs(fit-target)
 
-def fitness2(tree: Expresion, tuples: list):
-    pass
+
+
+    
 
 
 

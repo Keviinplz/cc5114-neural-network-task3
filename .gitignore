@@ -1,5 +1,6 @@
 __pycache__/
 lib/__pycache__
 lib/ast/__pycache__
+lib/ga/__pycache__
 .git
 
